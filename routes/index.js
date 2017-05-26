@@ -6,14 +6,20 @@ const userCtrl = require('../controller/user')
 const auth = require('../middlewares/auth')
 const api = express.Router()
 
+//product routes
 api.get('/product', productCtrl.getProducts)
 api.get('/product/:productId', productCtrl.getProduct)
 api.post('/product', auth, productCtrl.saveProduct)
 api.put('/product/:productId', auth, productCtrl.updateProduct)
 api.delete('/product/:productId', auth, productCtrl.deleteProduct)
 
+//user routes
 api.post('/signup', userCtrl.signUp)
 api.post('/signin', userCtrl.signIn)
+api.get('/users', userCtrl.getUsers) //without security
+api.get('/user/:email', userCtrl.getUser) //without security
+
+//private pages
 api.get('/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})
 })

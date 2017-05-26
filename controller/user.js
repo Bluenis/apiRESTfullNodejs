@@ -8,8 +8,13 @@ function signUp(req, res){
    const user = new User({
        email: req.body.email,
        displayName: req.body.displayName,
-       password: req.body.password
+       password: req.body.password,
+       address: req.body.address,
+       telephone: req.body.telephone,
+       mobile: req.body.mobile,       
    })
+   user.avatar = user.gravatar()
+   
    user.save((err)=>{
        if (err) res.status(500).send({message: 'Error al crear el usuario'})
 
@@ -18,6 +23,7 @@ function signUp(req, res){
        })
    })
 }
+
 function signIn(req, res){
     User.findOne({ email: req.body.email },(err, user)=>{
         console.log(user)
@@ -37,7 +43,28 @@ function signIn(req, res){
     })
 }
 
+function getUser(req, res){
+    let email = req.params.email
+
+    User.findOne({email: email}, (err, user)=>{
+        if (err) return res.status(500).send({message: 'Error al realizar la peticion'})
+        if (!user) return res.status(404).send({message: 'El usuario no existe'})
+
+        res.status(200).send({ user })
+    })
+}
+
+function getUsers(req,res){
+    User.find({},(err,users)=>{
+        if (err) return res.status(500).send({message: 'Error al realizar la peticion'})
+        if (!users) return res.status(404).send({message: 'No hay usuarios'})
+        res.status(200).send({users})
+    })
+}
+
 module.exports={
    signIn,
-   signUp
+   signUp,
+   getUser,
+   getUsers,
 }
