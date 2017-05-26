@@ -13,7 +13,7 @@ api.put('/product/:productId', auth, productCtrl.updateProduct)
 api.delete('/product/:productId', auth, productCtrl.deleteProduct)
 
 api.post('/signup', userCtrl.signUp)
-api.post('/signin', auth, userCtrl.signIn)
+api.post('/signin', userCtrl.signIn)
 api.get('/private', auth, function(req,res){
     res.status(200).send({message: 'Tienes acceso'})
 })
