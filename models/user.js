@@ -1,10 +1,11 @@
 'use strict'
 const mongoose= require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 
-const UserSchema = Schema({
+var UserSchema = Schema({
     email: {type: String, unique: true, lowercase: true, required: true},
     displayName: {type:String, required: true},
     avatar: String,
@@ -15,6 +16,8 @@ const UserSchema = Schema({
     telephone: String,
     mobile: String,
 })
+
+UserSchema.plugin(uniqueValidator)
 
 UserSchema.pre('save', function(next){
     let user= this
