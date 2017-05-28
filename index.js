@@ -12,5 +12,5 @@ mongoose.connect(config.db,(err, res)=>{
 
     app.listen(config.port, () => {
     console.log('hola Mundo');
-})
+    })
 })

@@ -5,17 +5,23 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt-nodejs')
 const crypto = require('crypto')
 
+const validatePass =  { 
+    validator: function(p){ return this.password_confirmation == p}, 
+    message: "Las contraseñas no son iguales"
+}
 var UserSchema = Schema({
-    email: {type: String, unique: true, lowercase: true, required: true},
+    email: { type: String, unique: true, lowercase: true, required: true, minlength: 8 },
     displayName: {type:String, required: true},
     avatar: String,
-    password: String, //{ type: String, select: false},
+    password: { type:String, minlength: 6, validate: validatePass }, //{ type: String, select: false},
     signupDate:  { type: Date, default: Date.now()},
     lastLogin: Date,
     address: String,
     telephone: String,
     mobile: String,
 })
+UserSchema.virtual("password_confirmation").get(function(){ return this.value }
+    ).set( function(passwordconf){ this.value=passwordconf })
 
 UserSchema.plugin(uniqueValidator)
 

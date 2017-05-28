@@ -9,6 +9,7 @@ function signUp(req, res){
        email: req.body.email,
        displayName: req.body.displayName,
        password: req.body.password,
+       password_confirmation: req.body.password_confirmation,
        address: req.body.address,
        telephone: req.body.telephone,
        mobile: req.body.mobile,       
